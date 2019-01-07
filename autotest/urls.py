@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from apitest import views    #加入引用
+from product import proviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('login/', views.login),
     path('home/', views.home),    #加入
     path('logout/',views.logout),
+    path('product_manage/', proviews.product_manage),
 ]
