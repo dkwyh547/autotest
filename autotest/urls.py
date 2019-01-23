@@ -39,4 +39,7 @@ urlpatterns = [
     path('appcase_manage/', appviews.appcase_manage),
     path('appcasestep_manage/', appviews.appcasestep_manage),
     path('webcasestep_manage/', webviews.webcasestep_manage),
+    path('test_report/', views.test_report),
+    path('apptest_report/', appviews.apptest_report),
+    path('left/', views.left),
 ]
