@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from apitest.models import Apitest,Apistep,Apis
 import pymysql
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 #import HTMLTestRunner
 
 # Create your views here.
@@ -79,3 +80,33 @@ def test_report(request):
 
 def left(request):
     return render(request, "left.html")
+
+#搜索功能
+@login_required
+def apisearch(request):
+    username =request.session.get('user', '')   #读取浏览器登录session
+    search_apitestname = request.GET.get("apitestname", "")
+    apitest_list = Apitest.objects.filter(apitestname__icontains=search_apitestname)
+    return render(request, 'apitest_manage.html', {"user": username, "apitests": apitest_list})
+@login_required
+def apissearch(request):
+    username = request.session.get('user', '')
+    search_apiname = request.GET.get("apiname", "")
+    apis_list = Apis.objects.filter(apiname__icontains=search_apiname)
+    return render(request, 'apis_manage.html', {"user": username, "apiss": apis_list})
+
+# 流程接口管理
+@login_required
+def apitest_manage(request):
+    apitest_list = Apitest.objects.all()    #获取所有接口测试用例
+    username = request.session.get('user', '')  #读取浏览器登录session
+    paginator = Paginator(apitest_list, 8)  #生成paginator对象， 设置每页显示8条记录
+    page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
+    currentPage = int(page) #把获取的当前页码数转换成整数类型
+    try:
+        apitest_list = paginator.page(page) #获取当前页码数的记录列表
+    except PageNotAnInteger:
+        apitest_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
+    except EmptyPage:
+        apitest_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
+    return render(request, "apitest_manage.html", {"user": username, "apitests": apitest_list})
