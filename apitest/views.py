@@ -97,8 +97,40 @@ def apissearch(request):
 
 # 流程接口管理
 @login_required
+def apis_manage(request):
+    apis_list = Apis.objects.all()    #获取所有接口测试用例
+    username = request.session.get('user', '')  #读取浏览器登录session
+    paginator = Paginator(apis_list, 8)  #生成paginator对象， 设置每页显示8条记录
+    page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
+    currentPage = int(page) #把获取的当前页码数转换成整数类型
+    try:
+        apis_list = paginator.page(page) #获取当前页码数的记录列表
+    except PageNotAnInteger:
+        apis_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
+    except EmptyPage:
+        apis_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
+    return render(request, "apis_manage.html", {"user": username, "apiss": apis_list})
+
+# 流程接口管理
+@login_required
+def apistep_manage(request):
+    apistep_list = Apis.objects.all()    #获取所有接口测试用例
+    username = request.session.get('user', '')  #读取浏览器登录session
+    paginator = Paginator(apistep_list, 8)  #生成paginator对象， 设置每页显示8条记录
+    page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
+    currentPage = int(page) #把获取的当前页码数转换成整数类型
+    try:
+        apistep_list = paginator.page(page) #获取当前页码数的记录列表
+    except PageNotAnInteger:
+        apistep_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
+    except EmptyPage:
+        apistep_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
+    return render(request, "apitest_manage.html", {"user": username, "apitests": apistep_list})
+
+# 流程接口管理
+@login_required
 def apitest_manage(request):
-    apitest_list = Apitest.objects.all()    #获取所有接口测试用例
+    apitest_list = Apis.objects.all()    #获取所有接口测试用例
     username = request.session.get('user', '')  #读取浏览器登录session
     paginator = Paginator(apitest_list, 8)  #生成paginator对象， 设置每页显示8条记录
     page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
