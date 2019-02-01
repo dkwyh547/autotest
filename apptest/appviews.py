@@ -42,3 +42,33 @@ def appstepsearch(request):
     search_appcasename = request.GET.get("appcasename", "")
     appcasestep_list = Appcasestep.objects.filter(appcasename__icontains=search_appcasename)
     return  render(request, 'appcasestep_manage.html', {"user": username, "appcasesteps": appcasestep_list})
+
+@login_required
+def appcases_manage(request):
+    appcase_list = Appcase.objects.all()    #获取所有接口测试用例
+    username = request.session.get('user', '')  #读取浏览器登录session
+    paginator = Paginator(appcase_list, 8)  #生成paginator对象， 设置每页显示8条记录
+    page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
+    currentPage = int(page) #把获取的当前页码数转换成整数类型
+    try:
+        appcase_list = paginator.page(page) #获取当前页码数的记录列表
+    except PageNotAnInteger:
+        appcase_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
+    except EmptyPage:
+        appcase_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
+    return render(request, "appcase_manage.html", {"user": username, "appcases": appcase_list})
+
+@login_required
+def appcasesteps_manage(request):
+    appcasestep_list = Appcasestep.objects.all()    #获取所有接口测试用例
+    username = request.session.get('user', '')  #读取浏览器登录session
+    paginator = Paginator(appcasestep_list, 8)  #生成paginator对象， 设置每页显示8条记录
+    page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
+    currentPage = int(page) #把获取的当前页码数转换成整数类型
+    try:
+        appcasestep_list = paginator.page(page) #获取当前页码数的记录列表
+    except PageNotAnInteger:
+        appcasestep_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
+    except EmptyPage:
+        appcasestep_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
+    return render(request, "appcasestep_manage.html", {"user": username, "appcasesteps": appcasestep_list})
