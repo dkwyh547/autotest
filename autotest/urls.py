@@ -53,4 +53,5 @@ urlpatterns = [
     path('websearch/', webviews.websearch),
     path('webstepsearch/', webviews.webstepsearch),
     path('usersearch/', setviews.usersearch),
+    path('welcome/',views.welcome),
 ]

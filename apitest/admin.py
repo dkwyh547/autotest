@@ -21,3 +21,5 @@ class ApisAdmin(admin.TabularInline):
 
 admin.site.register(Apis)
 admin.site.register(Apitest, ApitestAdmin)
+admin.site.site_title = 'auto'
+admin.site.site_header = 'auto'

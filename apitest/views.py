@@ -12,8 +12,8 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 def test(request):
     return HttpResponse("hello test")    #返回HttpResponse响应函数
 
-#def login(request):
-#    return render(request, 'login.html')
+def welcome(request):
+    return render(request, 'welcome.html')
 
 def login(request):
     if request.POST:
