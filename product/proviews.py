@@ -35,6 +35,7 @@ def productsearch(request):
 @login_required
 def products_manage(request):
     product_list = Product.objects.all()    #获取所有接口测试用例
+    product_count = Product.objects.all().count()   #统计产品数
     username = request.session.get('user', '')  #读取浏览器登录session
     paginator = Paginator(product_list, 8)  #生成paginator对象， 设置每页显示8条记录
     page = request.GET.get('page', 1)   #获取当前的页码数，默认为第1页
@@ -45,4 +46,4 @@ def products_manage(request):
         product_list = paginator.page(1)    #如果输入的页数不是整数，则显示第一页内容
     except EmptyPage:
         product_list = paginator.page(paginator.num_pages)  #如果输入的页数不在系统的页数中，则显示最后一页内容
-    return render(request, "product_manage.html", {"user": username, "products": product_list})
+    return render(request, "product_manage.html", {"user": username, "products": product_list,"productcounts": product_count})  #把值赋给productcounts变量

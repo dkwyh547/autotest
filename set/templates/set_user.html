@@ -34,6 +34,18 @@
         {% csrf_token %}
         <input type="search" name="username" placeholder="名称" required>
         <button type="submit">搜索</button>
+<!-- 增加用户-->
+<div style="float:right;width:65%">
+<select name="User" id="id_User">
+<option value="" selected>----用户列表----</option>
+</select>
+<a class="related-widget-wrapper-link change-related" id="change_id_User" data-href-template="/admin/auth/user/__fk__/change/?_to_field=id&amp;_popup=1" title="更改选中的用户">
+<img src="/static/admin/img/icon-changelink.svg" alt="修改"/>
+</a>
+<a class="related-widget-wrapper-link add-related" id="add_id_User" href="/admin/auth/user/add/?_to_field=id&amp;_popup=1" title="增加另一个 用户">
+<img src="/static/admin/img/icon-addlink.svg" alt="增加"/>增加
+</a>
+</div>
     </form>
 </div>
 <!-- 导航栏 -->
@@ -48,6 +60,12 @@
         </ul>
     </div>
 </nav>
+
+<td><a style="color: light blue" class="related-widget-wrapper-link add-related" id="add_id_User" href="../admin/auth/user/{{ user.id }}/change/?_to_field=id&_popup=1">
+    <img src="/static/admin/img/icon-changelink.svg" alt="编辑"/>编辑</a></td>
+<td><a style="color: light blue" class="related-widget-wrapper-link add-related" id="add_id_User" href="../admin/auth/user/{{ user.id }}/change/?_to_field=id&_popup=1">
+    <img src="/static/admin/img/icon-changelink.svg" alt="删除"/>删除</a></td>
+
 <div class="row" style="padding-top: 55px;">
     <div class="col-md-ll">
         <!-- 用户管理 -->

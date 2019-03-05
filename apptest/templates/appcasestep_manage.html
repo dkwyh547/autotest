@@ -77,6 +77,9 @@
 </div>
 <div class="container">
 <span style="position: absolute; right: 100px; bottom: 30px;">
+<div style="position: absolute; right: 100px; width: 100px;">
+    <tr><th>总数</th><td>{{ appcasestepcounts }}</td></tr>    {# 前端读取定义的变量 #}
+</div>
     <ul class="pagination" id="pager">
         {# 上一页链接开始 #}
         {% if appcasesteps.has_previous %}
